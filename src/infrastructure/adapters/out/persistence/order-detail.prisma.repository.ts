@@ -18,21 +18,17 @@ export class OrderDetailPrismaRepository implements OrderDetailRepositoryPort {
   }
 
   async saveBatch(items: Partial<OrderDetail>[]): Promise<OrderDetail[]> {
-    const results = await this.prisma.orderDetail.createMany({
+    await this.prisma.orderDetail.createMany({
       data: items as any[],
     });
 
-    // Fetch the created items to return them with relations
-    const createdOrderDetailIds = items.map((item) => item.id).filter(Boolean) as number[];
+    // createMany doesn't return IDs, so fetch by orderId instead
+    const orderId = items[0]?.orderId;
+    if (!orderId) return [];
+
     const createdItems = await this.prisma.orderDetail.findMany({
-      where: {
-        id: {
-          in: createdOrderDetailIds,
-        },
-      },
-      include: {
-        product: true,
-      },
+      where: { orderId },
+      include: { product: true },
     });
 
     return createdItems as unknown as OrderDetail[];

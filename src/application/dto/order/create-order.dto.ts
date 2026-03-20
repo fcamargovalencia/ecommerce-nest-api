@@ -4,7 +4,6 @@ import {
   IsArray,
   ValidateNested,
   IsNotEmpty,
-  MinLength,
   ArrayMinSize,
 } from 'class-validator';
 import { Type } from 'class-transformer';

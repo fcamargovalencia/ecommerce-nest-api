@@ -2,7 +2,6 @@ import {
   Injectable,
   Inject,
   NotFoundException,
-  ForbiddenException,
 } from '@nestjs/common';
 import { PersonalInfoDto, AddressDto } from '../dto/user';
 import {
