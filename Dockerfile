@@ -12,10 +12,11 @@ RUN npm ci
 # Copy source
 COPY . .
 
-# Generate Prisma client and compile TypeScript
-# If either step fails, Docker build fails with a visible error
+# Generate Prisma client
 RUN npx prisma generate
-RUN npm run build
+
+# Compile TypeScript directly with tsc — errors are fully visible in build logs
+RUN npx tsc -p tsconfig.build.json
 
 # Verify the entry point exists before declaring success
 RUN test -f dist/main.js || (echo "ERROR: dist/main.js was not created. Build failed." && exit 1)
@@ -24,5 +25,4 @@ EXPOSE 3000
 ENV NODE_ENV=production
 
 # tsconfig-paths resolves @domain/*, @application/*, etc. at runtime
-# tsconfig.json is available in /app from the COPY above
 CMD ["node", "-r", "tsconfig-paths/register", "dist/main"]
