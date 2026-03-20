@@ -1,3 +1,7 @@
+FROM node:18-alpine AS ConfigSsl
+
+RUN apk add --no-cache openssl
+
 # Build stage
 FROM node:20-alpine AS builder
 RUN apk add --no-cache openssl
