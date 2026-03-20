@@ -9,6 +9,9 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    env:
+      # Dummy URL for prisma generate — it only needs a valid format, not a real connection
+      DATABASE_URL: postgresql://user:pass@localhost:5432/dummy
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,21 +26,13 @@ jobs:
         run: npm ci
 
       - name: Generate Prisma client
-        run: npm run prisma:generate
+        run: npx prisma generate
 
       - name: Run linter
         run: npm run lint
 
       - name: Run tests
         run: npm run test:cov
-
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v3
-        if: always()
-        with:
-          files: ./coverage/coverage-final.json
-          flags: unittests
-          name: codecov-umbrella
 
   build-and-push:
     needs: lint-and-test
