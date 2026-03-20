@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+dist/
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Testing
+.nyc_output/
+.coverage/
+
+# Build artifacts
+*.js.map
+*.d.ts.map
+
+# Prisma
+prisma/migrations/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
